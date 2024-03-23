@@ -1,1 +1,1 @@
-# TTA-Electron
+# Time Tracking App - Electron
