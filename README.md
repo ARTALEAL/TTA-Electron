@@ -19,4 +19,3 @@ quasar dev
 ```bash
 quasar build
 ```
-
