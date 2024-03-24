@@ -1,11 +1,19 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, screen } from "electron";
 import path from "path";
 
 export default class TimerApp {
   constructor(platform) {
+    this.width;
+    this.height;
     this.platform = platform;
     this.subscribeForAppEvents();
-    app.whenReady().then(() => this.createWindow());
+    app.whenReady().then(() => {
+      const primaryDisplay = screen.getPrimaryDisplay();
+      const { width, height } = primaryDisplay.workAreaSize;
+      this.width = width;
+      this.height = height;
+      this.createWindow();
+    });
   }
 
   createWindow() {
@@ -13,6 +21,9 @@ export default class TimerApp {
       icon: path.resolve(__dirname, "icons/icon.png"), // tray icon
       width: 400,
       height: 600,
+      maxHeight: this.height,
+      maxWidth: this.width,
+      autoHideMenuBar: true,
       useContentSize: true,
       webPreferences: {
         contextIsolation: true,
@@ -37,6 +48,18 @@ export default class TimerApp {
   }
 
   subscribeForAppEvents() {
+    // Запрет на повторное открытие (lock)
+    const lock = app.requestSingleInstanceLock();
+    if (!lock) {
+      app.quit();
+    } else {
+      app.on("second-instance", () => {
+        if (this.mainWindow) {
+          this.mainWindow.focus();
+        }
+      });
+    }
+
     app.on("window-all-closed", () => {
       if (this.platform !== "darwin") {
         app.quit();
