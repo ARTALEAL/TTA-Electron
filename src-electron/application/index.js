@@ -23,7 +23,8 @@ export default class TimerApp {
     this.mainWindow.loadURL(process.env.APP_URL);
 
     if (process.env.DEBUGGING) {
-      this.mainWindow.webContents.openDevTools();
+      // mode:detach - запуск девтулзов в отдельном окне
+      this.mainWindow.webContents.openDevTools({ mode: "detach" });
     } else {
       this.mainWindow.webContents.on("devtools-opened", () => {
         this.mainWindow.webContents.closeDevTools();
