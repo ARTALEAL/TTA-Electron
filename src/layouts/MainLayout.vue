@@ -59,6 +59,12 @@ const linksList = [
     icon: "favorite",
     link: "https://awesome.quasar.dev",
   },
+  {
+    title: "Salary Calc online",
+    caption: "Salary calculation per mins",
+    icon: "attach_money",
+    link: "https://artaleal.github.io/salary-calc/",
+  },
 ];
 
 export default defineComponent({

@@ -1,14 +1,16 @@
 <template>
-  <q-page class="flex flex-center">
-    <h1>Hello</h1>
-  </q-page>
+  <new-entry />
+  <activity-list-vue />
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import NewEntry from "components/NewEntry.vue";
+import ActivityListVue from "src/components/ActivityList.vue";
 
 export default defineComponent({
   name: "IndexPage",
+  components: { NewEntry, ActivityListVue },
 });
 </script>
 
