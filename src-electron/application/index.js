@@ -2,7 +2,8 @@ import { app, BrowserWindow, screen } from "electron";
 import path from "path";
 
 export default class TimerApp {
-  constructor(platform) {
+  constructor(platform, storage) {
+    this.storage = storage;
     this.width;
     this.height;
     this.platform = platform;
@@ -28,6 +29,7 @@ export default class TimerApp {
       webPreferences: {
         contextIsolation: true,
         preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
+        // nodeIntegration: true,
       },
     });
 
@@ -41,6 +43,12 @@ export default class TimerApp {
         this.mainWindow.webContents.closeDevTools();
       });
     }
+
+    this.mainWindow.webContents.on("did-finish-load", () => {
+      this.mainWindow.webContents.send("entries", {
+        entries: this.storage.get("entries"),
+      });
+    });
 
     this.mainWindow.on("closed", () => {
       this.mainWindow = null;
