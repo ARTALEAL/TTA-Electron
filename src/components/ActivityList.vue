@@ -15,6 +15,7 @@
 <script>
 import { defineComponent } from "vue";
 import ActivityVue from "./Activity.vue";
+import { useTasksStore } from "../stores/tasksStore";
 import { orderBy } from "lodash";
 export default defineComponent({
   name: "ActivityList",
@@ -22,13 +23,21 @@ export default defineComponent({
   data() {
     return {
       allTasks: null,
+      tasksStore: useTasksStore(),
     };
   },
-  methods: {},
+  methods: {
+    getTasks() {
+      this.allTasks = orderBy(this.tasksStore.getTasks, "createdAt", "desc");
+    },
+  },
   created() {
     window.myApp.getEntries(
       (_, data) => (this.allTasks = orderBy(data.entries, "createdAt", "desc"))
     );
+  },
+  mounted() {
+    this.getTasks();
   },
 });
 </script>
