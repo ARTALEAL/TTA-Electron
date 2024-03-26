@@ -28,6 +28,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { date } from "quasar";
 export default defineComponent({
   name: "NewEntry",
   data() {
@@ -47,7 +48,17 @@ export default defineComponent({
       window.myApp.startTimer();
     },
     handleStopTimer() {
+      const timeStamp = Date.now();
+      const entry = {
+        id: timeStamp,
+        title: this.newActivity,
+        description: "Описание отсутствует",
+        time: this.time,
+        createdAt: date.formatDate(timeStamp, "YYYY-MM-DDTHH:mm:ss"),
+      };
+      console.log(entry);
       console.log("stop");
+      window.myApp.saveEntry(entry);
       this.isTimerRun = false;
       window.myApp.stopTimer();
     },

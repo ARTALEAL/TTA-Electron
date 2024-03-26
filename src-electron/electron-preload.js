@@ -13,4 +13,7 @@ contextBridge.exposeInMainWorld("myApp", {
   stopTimer: () => {
     ipcRenderer.send("stop:timer");
   },
+  saveEntry: (data) => {
+    ipcRenderer.send("save", data);
+  },
 });

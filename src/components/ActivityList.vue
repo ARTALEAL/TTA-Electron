@@ -1,19 +1,35 @@
 <template>
   <section class="activity-list">
-    <activity-vue />
+    <div v-if="!allTasks" class="no-entries">Ещё нет записей</div>
+    <activity-vue
+      v-else
+      v-for="task in allTasks"
+      :title="task.title"
+      :description="task.description"
+      :time="task.time"
+      :key="task.id"
+    />
   </section>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import ActivityVue from "./Activity.vue";
+import { orderBy } from "lodash";
 export default defineComponent({
   name: "ActivityList",
   components: { ActivityVue },
   data() {
-    return {};
+    return {
+      allTasks: null,
+    };
   },
   methods: {},
+  created() {
+    window.myApp.getEntries(
+      (_, data) => (this.allTasks = orderBy(data.entries, "createdAt", "desc"))
+    );
+  },
 });
 </script>
 
@@ -21,5 +37,11 @@ export default defineComponent({
 .activity-list {
   display: flex;
   flex-direction: column;
+}
+.no-entries {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  color: #a8a8a8;
 }
 </style>

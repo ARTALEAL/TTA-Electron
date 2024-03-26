@@ -1,11 +1,11 @@
 <template>
   <div class="activity">
     <div class="details">
-      <h5 class="title">Title</h5>
-      <p class="description">Description</p>
+      <h5 class="title">{{ title }}</h5>
+      <p class="description">{{ description }}</p>
     </div>
     <div class="actions">
-      <span class="time">00:00:00</span>
+      <span class="time">{{ convertedTime }}</span>
     </div>
   </div>
 </template>
@@ -14,10 +14,24 @@
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "Activity",
+  props: {
+    title: String,
+    description: String,
+    time: Number,
+  },
   data() {
-    return {};
+    return {
+      timeIn: this.$props.time,
+    };
   },
   methods: {},
+  computed: {
+    convertedTime: function () {
+      const date = new Date(0);
+      date.setSeconds(this.timeIn);
+      return date.toISOString().substring(11, 19);
+    },
+  },
 });
 </script>
 
