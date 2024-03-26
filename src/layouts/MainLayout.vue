@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Timer Tracking App </q-toolbar-title>
+        <q-toolbar-title> Time Tracking App </q-toolbar-title>
 
         <div>v {{ versionApp }}</div>
       </q-toolbar>

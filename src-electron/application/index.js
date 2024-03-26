@@ -1,7 +1,6 @@
 import { app, BrowserWindow, screen, ipcMain } from "electron";
 import path from "path";
 import { Timer } from "./Timer";
-import { data } from "autoprefixer";
 
 export default class TimerApp {
   constructor(platform, storage) {
