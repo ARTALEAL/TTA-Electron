@@ -22,7 +22,7 @@
         />
       </div>
     </div>
-    <div class="timer">{{ time }}</div>
+    <div class="timer">{{ timer }}</div>
   </section>
 </template>
 
@@ -57,6 +57,13 @@ export default defineComponent({
       this.isTimerRun = true;
       this.time = data.time;
     });
+  },
+  computed: {
+    timer: function () {
+      const date = new Date(0);
+      date.setSeconds(this.time);
+      return date.toISOString().substring(11, 19);
+    },
   },
 });
 </script>
