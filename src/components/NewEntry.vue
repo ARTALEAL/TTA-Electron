@@ -16,12 +16,13 @@
           size="20px"
           round
           color="primary"
-          :icon="isTimer ? 'stop' : 'play_arrow'"
-          @click="handlePlay"
+          :disable="newActivity ? false : true"
+          :icon="isTimerRun ? 'stop' : 'play_arrow'"
+          @click="isTimerRun ? handleStopTimer() : handleStartTimer()"
         />
       </div>
     </div>
-    <div class="timer">00:00:00</div>
+    <div class="timer">{{ time }}</div>
   </section>
 </template>
 
@@ -32,16 +33,30 @@ export default defineComponent({
   data() {
     return {
       newActivity: "",
-      isTimer: false,
+      isTimerRun: false,
+      time: 0,
     };
   },
   methods: {
     testi() {
       console.log(this.newActivity);
     },
-    handlePlay() {
-      this.isTimer = !this.isTimer;
+    handleStartTimer() {
+      console.log("start");
+      this.isTimerRun = true;
+      window.myApp.startTimer();
     },
+    handleStopTimer() {
+      console.log("stop");
+      this.isTimerRun = false;
+      window.myApp.stopTimer();
+    },
+  },
+  created() {
+    window.myApp.subscribeForTimer((_, data) => {
+      this.isTimerRun = true;
+      this.time = data.time;
+    });
   },
 });
 </script>

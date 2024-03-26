@@ -1,13 +1,16 @@
-import { app, BrowserWindow, screen } from "electron";
+import { app, BrowserWindow, screen, ipcMain } from "electron";
 import path from "path";
+import { Timer } from "./Timer";
 
 export default class TimerApp {
   constructor(platform, storage) {
     this.storage = storage;
+    this.timer = new Timer();
     this.width;
     this.height;
     this.platform = platform;
     this.subscribeForAppEvents();
+    this.subscribeForIPC();
     app.whenReady().then(() => {
       const primaryDisplay = screen.getPrimaryDisplay();
       const { width, height } = primaryDisplay.workAreaSize;
@@ -35,6 +38,10 @@ export default class TimerApp {
 
     this.mainWindow.loadURL(process.env.APP_URL);
 
+    this.timer.onChange = () => {
+      this.mainWindow.webContents.send("tick", { time: this.timer.get() });
+    };
+
     if (process.env.DEBUGGING) {
       // mode:detach - запуск девтулзов в отдельном окне
       this.mainWindow.webContents.openDevTools({ mode: "detach" });
@@ -51,6 +58,7 @@ export default class TimerApp {
     });
 
     this.mainWindow.on("closed", () => {
+      this.timer.onChange = null;
       this.mainWindow = null;
     });
   }
@@ -79,5 +87,9 @@ export default class TimerApp {
         this.createWindow();
       }
     });
+  }
+  subscribeForIPC() {
+    ipcMain.on("start:timer", () => this.timer.start());
+    ipcMain.on("stop:timer", () => this.timer.stop());
   }
 }
