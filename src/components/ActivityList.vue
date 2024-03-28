@@ -9,6 +9,7 @@
       :time="task.time"
       :id="task.id"
       :key="task.id"
+      @delete-item="deleteTask"
     />
   </section>
 </template>
@@ -21,6 +22,7 @@ import { orderBy } from "lodash";
 export default defineComponent({
   name: "ActivityList",
   components: { ActivityVue },
+  emits: ["deleteItem"],
   data() {
     return {
       allTasks: null,
@@ -30,6 +32,9 @@ export default defineComponent({
   methods: {
     getTasks() {
       this.allTasks = orderBy(this.tasksStore.getTasks, "createdAt", "desc");
+    },
+    deleteTask() {
+      this.getTasks();
     },
   },
   created() {

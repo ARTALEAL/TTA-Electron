@@ -35,12 +35,19 @@
     <div class="actions">
       <span class="time">{{ convertedTime }}</span>
     </div>
-    <q-btn size="xs" dense icon="delete"></q-btn>
+    <q-btn
+      class="delete-btn"
+      size="sm"
+      dense
+      icon="delete_forever"
+      @click="handleDelete"
+    ></q-btn>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import { useTasksStore } from "../stores/tasksStore";
 export default defineComponent({
   name: "Activity",
   props: {
@@ -54,6 +61,7 @@ export default defineComponent({
       timeIn: this.$props.time,
       newDescription: "",
       editPopup: false,
+      tasksStore: useTasksStore(),
     };
   },
   methods: {
@@ -69,6 +77,12 @@ export default defineComponent({
     },
     discardChanges() {
       this.newDescription = "";
+    },
+    handleDelete() {
+      const id = this.$props.id;
+      window.myApp.deleteEntry(id);
+      this.tasksStore.deleteItem(id);
+      this.$emit("deleteItem");
     },
   },
   computed: {
@@ -88,6 +102,7 @@ export default defineComponent({
   justify-content: space-between;
   border-bottom: 1px solid #f0f0f0;
   padding: 20px 10px;
+  position: relative;
 }
 
 .activity:hover {
@@ -111,5 +126,11 @@ export default defineComponent({
 
 .time {
   color: #777;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 </style>

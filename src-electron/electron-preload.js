@@ -19,4 +19,7 @@ contextBridge.exposeInMainWorld("myApp", {
   editDescription: (data) => {
     ipcRenderer.send("edit:description", data);
   },
+  deleteEntry: (id) => {
+    ipcRenderer.send("delete:entry", id);
+  },
 });

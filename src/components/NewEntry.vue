@@ -55,10 +55,11 @@ export default defineComponent({
         time: this.time,
         createdAt: date.formatDate(timeStamp, "YYYY-MM-DDTHH:mm:ss"),
       };
-      console.log(entry);
       window.myApp.saveEntry(entry);
       this.isTimerRun = false;
       window.myApp.stopTimer();
+      this.time = 0;
+      this.newActivity = "";
     },
   },
   created() {

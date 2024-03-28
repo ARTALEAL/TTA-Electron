@@ -107,5 +107,10 @@ export default class TimerApp {
       });
       this.storage.set("entries", entries);
     });
+    ipcMain.on("delete:entry", (_, id) => {
+      const entries = this.storage.get("entries");
+      const result = entries.filter((el) => el.id !== id);
+      this.storage.set("entries", result);
+    });
   }
 }
