@@ -19,7 +19,8 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header> Меню </q-item-label>
+        <MenuItems v-for="item in menuItems" :key="item.title" v-bind="item" />
 
         <EssentialLink
           v-for="link in linksList"
@@ -36,32 +37,30 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import { version } from "../../package";
+import MenuItems from "components/MenuItems.vue";
+
+const menuItems = [
+  {
+    title: "Timer",
+    caption: "Таймер задач",
+    icon: "timer",
+    link: "/",
+  },
+  {
+    title: "Todo - list",
+    caption: "Список задач",
+    icon: "event",
+    link: "/todo",
+  },
+];
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
-  },
-  {
-    title: "Salary Calc online",
-    caption: "Salary calculation per mins",
+    title: "Калькулятор зарплаты (online)",
+    caption: "Калькулятор расчёта зарплаты",
     icon: "attach_money",
     link: "https://artaleal.github.io/salary-calc/",
   },
@@ -72,11 +71,13 @@ export default defineComponent({
 
   components: {
     EssentialLink,
+    MenuItems,
   },
 
   data() {
     return {
       linksList,
+      menuItems,
       leftDrawerOpen: false,
       versionApp: version,
     };
