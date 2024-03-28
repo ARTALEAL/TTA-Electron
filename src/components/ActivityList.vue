@@ -7,6 +7,7 @@
       :title="task.title"
       :description="task.description"
       :time="task.time"
+      :id="task.id"
       :key="task.id"
     />
   </section>

@@ -43,7 +43,6 @@ export default defineComponent({
       console.log(this.newActivity);
     },
     handleStartTimer() {
-      console.log("start");
       this.isTimerRun = true;
       window.myApp.startTimer();
     },
@@ -57,7 +56,6 @@ export default defineComponent({
         createdAt: date.formatDate(timeStamp, "YYYY-MM-DDTHH:mm:ss"),
       };
       console.log(entry);
-      console.log("stop");
       window.myApp.saveEntry(entry);
       this.isTimerRun = false;
       window.myApp.stopTimer();

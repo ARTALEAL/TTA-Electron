@@ -1,6 +1,7 @@
 import { app, BrowserWindow, screen, ipcMain } from "electron";
 import path from "path";
 import { Timer } from "./Timer";
+import { data } from "autoprefixer";
 
 export default class TimerApp {
   constructor(platform, storage) {
@@ -96,6 +97,15 @@ export default class TimerApp {
       entries.push(data);
       this.storage.set("entries", entries);
       this.mainWindow.webContents.send("entries", { entries });
+    });
+    ipcMain.on("edit:description", (_, data) => {
+      const entries = this.storage.get("entries");
+      entries.forEach((el) => {
+        if (el.id === data.id) {
+          el.description = data.description;
+        }
+      });
+      this.storage.set("entries", entries);
     });
   }
 }

@@ -16,4 +16,7 @@ contextBridge.exposeInMainWorld("myApp", {
   saveEntry: (data) => {
     ipcRenderer.send("save", data);
   },
+  editDescription: (data) => {
+    ipcRenderer.send("edit:description", data);
+  },
 });
