@@ -35,6 +35,7 @@
     <div class="actions">
       <span class="time">{{ convertedTime }}</span>
     </div>
+    <q-btn size="xs" dense icon="delete"></q-btn>
   </div>
 </template>
 
