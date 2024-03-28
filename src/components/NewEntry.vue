@@ -6,7 +6,7 @@
           rounded
           outlined
           v-model="newActivity"
-          @change="testi"
+          @keyup.enter="newActivity ? handleStartTimer() : null"
           label="Новая активность"
         />
       </div>
@@ -28,7 +28,6 @@
 
 <script>
 import { defineComponent } from "vue";
-import { date } from "quasar";
 export default defineComponent({
   name: "NewEntry",
   data() {
@@ -39,23 +38,11 @@ export default defineComponent({
     };
   },
   methods: {
-    testi() {
-      console.log(this.newActivity);
-    },
     handleStartTimer() {
       this.isTimerRun = true;
-      window.myApp.startTimer();
+      window.myApp.startTimer(this.newActivity);
     },
     handleStopTimer() {
-      const timeStamp = Date.now();
-      const entry = {
-        id: timeStamp,
-        title: this.newActivity,
-        description: "Описание отсутствует",
-        time: this.time,
-        createdAt: date.formatDate(timeStamp, "YYYY-MM-DDTHH:mm:ss"),
-      };
-      window.myApp.saveEntry(entry);
       this.isTimerRun = false;
       window.myApp.stopTimer();
       this.time = 0;
@@ -66,6 +53,7 @@ export default defineComponent({
     window.myApp.subscribeForTimer((_, data) => {
       this.isTimerRun = true;
       this.time = data.time;
+      this.newActivity = data.title;
     });
   },
   computed: {

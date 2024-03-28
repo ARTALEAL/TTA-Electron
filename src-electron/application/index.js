@@ -1,7 +1,7 @@
 import { app, BrowserWindow, screen, ipcMain } from "electron";
 import path from "path";
 import { Timer } from "./Timer";
-import { data } from "autoprefixer";
+import { date } from "quasar";
 
 export default class TimerApp {
   constructor(platform, storage) {
@@ -33,14 +33,16 @@ export default class TimerApp {
       webPreferences: {
         contextIsolation: true,
         preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
-        // nodeIntegration: true,
       },
     });
 
     this.mainWindow.loadURL(process.env.APP_URL);
 
     this.timer.onChange = () => {
-      this.mainWindow.webContents.send("tick", { time: this.timer.get() });
+      this.mainWindow.webContents.send("tick", {
+        time: this.timer.get(),
+        title: this.entry.title,
+      });
     };
 
     if (process.env.DEBUGGING) {
@@ -90,14 +92,31 @@ export default class TimerApp {
     });
   }
   subscribeForIPC() {
-    ipcMain.on("start:timer", () => this.timer.start());
-    ipcMain.on("stop:timer", () => this.timer.stop());
-    ipcMain.on("save", (_, data) => {
+    ipcMain.on("start:timer", (_, data) => {
+      this.timer.start();
+      const timeStamp = Date.now();
+      this.entry = {
+        id: timeStamp,
+        title: data.title,
+        description: "Описание отсутствует",
+        time: 0,
+        createdAt: date.formatDate(timeStamp, "YYYY-MM-DDTHH:mm:ss"),
+      };
+    });
+    ipcMain.on("stop:timer", () => {
+      const timer = this.timer.stop();
       const entries = this.storage.get("entries");
-      entries.push(data);
+      this.entry.time = timer;
+      entries.push(this.entry);
       this.storage.set("entries", entries);
       this.mainWindow.webContents.send("entries", { entries });
     });
+    // ipcMain.on("save", (_, data) => {
+    //   const entries = this.storage.get("entries");
+    //   entries.push(data);
+    //   this.storage.set("entries", entries);
+    //   this.mainWindow.webContents.send("entries", { entries });
+    // });
     ipcMain.on("edit:description", (_, data) => {
       const entries = this.storage.get("entries");
       entries.forEach((el) => {

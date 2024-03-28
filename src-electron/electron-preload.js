@@ -7,8 +7,8 @@ contextBridge.exposeInMainWorld("myApp", {
   subscribeForTimer: (callback) => {
     ipcRenderer.on("tick", callback);
   },
-  startTimer: () => {
-    ipcRenderer.send("start:timer");
+  startTimer: (title) => {
+    ipcRenderer.send("start:timer", { title });
   },
   stopTimer: () => {
     ipcRenderer.send("stop:timer");
