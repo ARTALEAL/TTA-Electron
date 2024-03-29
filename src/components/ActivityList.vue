@@ -1,6 +1,6 @@
 <template>
   <section class="activity-list">
-    <div v-if="!allTasks" class="no-entries">Ещё нет записей</div>
+    <div v-if="allTasks.length === 0" class="no-entries">Ещё нет записей</div>
     <activity-vue
       v-else
       v-for="task in allTasks"
@@ -25,7 +25,7 @@ export default defineComponent({
   emits: ["deleteItem"],
   data() {
     return {
-      allTasks: null,
+      allTasks: [],
       tasksStore: useTasksStore(),
     };
   },

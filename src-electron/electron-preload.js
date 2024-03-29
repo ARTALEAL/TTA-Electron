@@ -4,6 +4,9 @@ contextBridge.exposeInMainWorld("myApp", {
   getEntries: (callback) => {
     ipcRenderer.on("entries", callback);
   },
+  getTodos: (callback) => {
+    ipcRenderer.on("todos", callback);
+  },
   subscribeForTimer: (callback) => {
     ipcRenderer.on("tick", callback);
   },

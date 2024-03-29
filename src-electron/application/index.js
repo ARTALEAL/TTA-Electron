@@ -58,6 +58,9 @@ export default class TimerApp {
       this.mainWindow.webContents.send("entries", {
         entries: this.storage.get("entries"),
       });
+      this.mainWindow.webContents.send("todos", {
+        todos: this.storage.get("todos"),
+      });
     });
 
     this.mainWindow.on("closed", () => {

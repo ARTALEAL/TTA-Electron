@@ -53,7 +53,7 @@ const menuItems = [
     title: "Todo - list",
     caption: "Список задач",
     icon: "event",
-    link: "/todo",
+    link: "/todos",
   },
 ];
 
