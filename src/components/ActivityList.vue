@@ -45,6 +45,15 @@ export default defineComponent({
   mounted() {
     this.getTasks();
   },
+  unmounted() {
+    window.myApp.getEntries(
+      (_, data) => (this.allTasks = orderBy(data.entries, "createdAt", "desc"))
+    );
+    const sum = this.allTasks.reduce((acc, cur) => {
+      return acc + cur.time;
+    }, 0);
+    this.tasksStore.setMinutes(sum);
+  },
 });
 </script>
 

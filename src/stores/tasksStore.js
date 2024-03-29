@@ -3,9 +3,11 @@ import { defineStore } from "pinia";
 export const useTasksStore = defineStore("tasks", {
   state: () => ({
     tasks: [],
+    totalMinutes: 0,
   }),
   getters: {
     getTasks: (state) => state.tasks,
+    getMinutes: (state) => state.totalMinutes,
   },
   actions: {
     setTasks(data) {
@@ -20,6 +22,9 @@ export const useTasksStore = defineStore("tasks", {
           el.description = data.description;
         }
       });
+    },
+    setMinutes(data) {
+      this.totalMinutes = data;
     },
   },
 });

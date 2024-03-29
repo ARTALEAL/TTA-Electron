@@ -44,16 +44,22 @@ import MenuItems from "components/MenuItems.vue";
 
 const menuItems = [
   {
-    title: "Timer",
+    title: "Time Tracker",
     caption: "Таймер задач",
     icon: "timer",
     link: "/",
   },
   {
-    title: "Todo - list",
+    title: "Список Todo",
     caption: "Список задач",
     icon: "event",
     link: "/todos",
+  },
+  {
+    title: "Калькулятор зарплаты",
+    caption: "Можно расчитать вашу оплату",
+    icon: "attach_money",
+    link: "/salary-calc",
   },
 ];
 
