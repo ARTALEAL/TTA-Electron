@@ -73,6 +73,7 @@ export default defineComponent({
           : this.$props.description,
       };
       window.myApp.editDescription(newData);
+      this.tasksStore.editTask(newData);
       this.editPopup = false;
     },
     discardChanges() {

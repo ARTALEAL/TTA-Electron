@@ -28,4 +28,7 @@ contextBridge.exposeInMainWorld("myApp", {
   deleteEntry: (id) => {
     ipcRenderer.send("delete:entry", id);
   },
+  deleteTodo: (id) => {
+    ipcRenderer.send("delete:todo", id);
+  },
 });

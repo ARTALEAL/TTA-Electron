@@ -17,5 +17,12 @@ export const useToDoStore = defineStore("todos", {
     deleteItem(id) {
       this.todos = this.todos.filter((el) => el.id !== id);
     },
+    editTodo(data) {
+      this.todos.forEach((el) => {
+        if (el.id === data.id) {
+          el.description = data.description;
+        }
+      });
+    },
   },
 });

@@ -61,6 +61,8 @@ export default defineComponent({
           : this.$props.description,
       };
       window.myApp.editTodoDescription(newData);
+      this.todoStore.editTodo(newData);
+      this.$emit("editItem");
       this.editPopup = false;
     },
     discardChanges() {

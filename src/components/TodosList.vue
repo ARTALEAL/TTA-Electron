@@ -8,7 +8,8 @@
       :id="todo.id"
       :title="todo.title"
       :description="todo.description"
-      @delete-item="deleteTodo"
+      @delete-todo="deleteTodo"
+      @edit-item="getTasks"
     />
   </section>
 </template>
@@ -21,7 +22,7 @@ import { orderBy } from "lodash";
 export default defineComponent({
   name: "TodosList",
   components: { Todo },
-  emits: ["deleteItem"],
+  emits: ["deleteTodo", "editItem"],
   data() {
     return {
       allTodos: [],

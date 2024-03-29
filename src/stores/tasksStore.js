@@ -14,5 +14,12 @@ export const useTasksStore = defineStore("tasks", {
     deleteItem(id) {
       this.tasks = this.tasks.filter((el) => el.id !== id);
     },
+    editTask(data) {
+      this.tasks.forEach((el) => {
+        if (el.id === data.id) {
+          el.description = data.description;
+        }
+      });
+    },
   },
 });
