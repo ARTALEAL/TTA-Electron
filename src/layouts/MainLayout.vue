@@ -21,7 +21,6 @@
       <q-list>
         <q-item-label header> Меню </q-item-label>
         <MenuItems v-for="item in menuItems" :key="item.title" v-bind="item" />
-
         <EssentialLink
           v-for="link in linksList"
           :key="link.title"
@@ -65,10 +64,22 @@ const menuItems = [
 
 const linksList = [
   {
-    title: "Калькулятор зарплаты (online)",
-    caption: "Калькулятор расчёта зарплаты",
-    icon: "attach_money",
-    link: "https://artaleal.github.io/salary-calc/",
+    title: "MDN",
+    caption: "Resources for Developers, by Developers",
+    icon: "support",
+    link: "https://developer.mozilla.org/ru/",
+  },
+  {
+    title: "Doka",
+    caption: "Дока, полезный ресурс",
+    icon: "description",
+    link: "https://doka.guide/",
+  },
+  {
+    title: "Об авторе",
+    caption: "Страничка автора",
+    icon: "info",
+    link: "https://github.com/ARTALEAL",
   },
 ];
 
