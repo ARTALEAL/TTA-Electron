@@ -8,6 +8,7 @@
       :id="todo.id"
       :title="todo.title"
       :description="todo.description"
+      :isDone="todo.isDone"
       @delete-todo="deleteTodo"
       @edit-item="getTasks"
     />

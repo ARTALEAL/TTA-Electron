@@ -1,10 +1,11 @@
 <template>
   <div class="activity">
     <div class="details">
-      <h5 class="title">{{ title }}</h5>
-      <p class="description" @click="editPopup = true">
+      <h5 :class="isDone ? 'title done' : 'title'">{{ title }}</h5>
+      <p class="description" @click="isDone ? null : (editPopup = true)">
         {{ newDescription ? newDescription : description }}
       </p>
+      <span v-if="isDone" class="done">Готово!</span>
       <q-dialog v-model="editPopup" persistent>
         <q-card style="min-width: 350px">
           <q-card-section>
@@ -32,6 +33,14 @@
         </q-card>
       </q-dialog>
     </div>
+    <div class="actions">
+      <q-btn
+        :icon="status ? 'edit' : 'done'"
+        :color="status ? 'primary' : 'green'"
+        @click="handleToggleDone"
+      />
+      <q-btn icon="delete" @click="handleDelete" color="red" />
+    </div>
   </div>
 </template>
 
@@ -44,12 +53,14 @@ export default defineComponent({
     title: String,
     description: String,
     id: Number,
+    isDone: Boolean,
   },
   data() {
     return {
       newDescription: "",
       editPopup: false,
       todoStore: useToDoStore(),
+      status: this.$props.isDone,
     };
   },
   methods: {
@@ -70,9 +81,18 @@ export default defineComponent({
     },
     handleDelete() {
       const id = this.$props.id;
-      window.myApp.deleteEntry(id);
+      window.myApp.deleteTodo(id);
       this.todoStore.deleteItem(id);
       this.$emit("deleteTodo");
+    },
+    handleToggleDone() {
+      this.status = !this.status;
+      const data = {
+        status: this.status,
+        id: this.$props.id,
+      };
+      window.myApp.changeTodoStatus(data);
+      this.todoStore.changeStatus(data);
     },
   },
 });
@@ -92,5 +112,32 @@ export default defineComponent({
   cursor: default;
   background-color: #f7f7f7;
   transition: background-color 0.4s ease;
+}
+
+.title {
+  margin: 0;
+}
+
+.description {
+  margin: 5px 0;
+  color: #8a8a8a;
+}
+
+.description:hover {
+  cursor: cell;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.actions {
+  display: flex;
+  gap: 5px;
+}
+
+.done {
+  color: green;
 }
 </style>

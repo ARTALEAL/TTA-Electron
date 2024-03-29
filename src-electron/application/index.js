@@ -143,5 +143,19 @@ export default class TimerApp {
       const result = entries.filter((el) => el.id !== id);
       this.storage.set("entries", result);
     });
+    ipcMain.on("delete:todo", (_, id) => {
+      const entries = this.storage.get("todos");
+      const result = entries.filter((el) => el.id !== id);
+      this.storage.set("todos", result);
+    });
+    ipcMain.on("change:todoisdone", (_, data) => {
+      const entries = this.storage.get("todos");
+      entries.forEach((el) => {
+        if (el.id === data.id) {
+          el.isDone = !el.isDone;
+        }
+      });
+      this.storage.set("todos", entries);
+    });
   }
 }

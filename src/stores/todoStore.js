@@ -24,5 +24,12 @@ export const useToDoStore = defineStore("todos", {
         }
       });
     },
+    changeStatus(data) {
+      this.todos.forEach((el) => {
+        if (el.id === data.id) {
+          el.isDone = data.status;
+        }
+      });
+    },
   },
 });

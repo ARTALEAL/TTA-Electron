@@ -39,6 +39,9 @@ export default defineComponent({
   },
   methods: {
     handleStartTimer() {
+      if (this.isTimerRun) {
+        return;
+      }
       this.isTimerRun = true;
       window.myApp.startTimer(this.newActivity);
     },
