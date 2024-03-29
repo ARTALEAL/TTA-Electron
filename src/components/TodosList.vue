@@ -1,7 +1,15 @@
 <template>
   <section class="activity-list">
     <div v-if="allTodos.length === 0" class="no-entries">Ещё нет задач</div>
-    <Todo v-else v-for="todo in allTodos" :key="todo.id" />
+    <Todo
+      v-else
+      v-for="todo in allTodos"
+      :key="todo.id"
+      :id="todo.id"
+      :title="todo.title"
+      :description="todo.description"
+      @delete-item="deleteTodo"
+    />
   </section>
 </template>
 
@@ -24,13 +32,13 @@ export default defineComponent({
     getTasks() {
       this.allTodos = orderBy(this.todosStore.getTasks, "createdAt", "desc");
     },
-    deleteTask() {
+    deleteTodo() {
       this.getTasks();
     },
   },
   created() {
     window.myApp.getTodos(
-      (_, data) => (this.allTasks = orderBy(data.todos, "createdAt", "desc"))
+      (_, data) => (this.allTodos = orderBy(data.todos, "createdAt", "desc"))
     );
   },
   mounted() {

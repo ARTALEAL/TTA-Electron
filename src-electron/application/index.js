@@ -114,12 +114,12 @@ export default class TimerApp {
       this.storage.set("entries", entries);
       this.mainWindow.webContents.send("entries", { entries });
     });
-    // ipcMain.on("save", (_, data) => {
-    //   const entries = this.storage.get("entries");
-    //   entries.push(data);
-    //   this.storage.set("entries", entries);
-    //   this.mainWindow.webContents.send("entries", { entries });
-    // });
+    ipcMain.on("save:todo", (_, data) => {
+      const todos = this.storage.get("todos");
+      todos.push(data);
+      this.storage.set("todos", todos);
+      this.mainWindow.webContents.send("todos", { todos });
+    });
     ipcMain.on("edit:description", (_, data) => {
       const entries = this.storage.get("entries");
       entries.forEach((el) => {
@@ -128,6 +128,15 @@ export default class TimerApp {
         }
       });
       this.storage.set("entries", entries);
+    });
+    ipcMain.on("edit:tododescription", (_, data) => {
+      const entries = this.storage.get("todos");
+      entries.forEach((el) => {
+        if (el.id === data.id) {
+          el.description = data.description;
+        }
+      });
+      this.storage.set("todos", entries);
     });
     ipcMain.on("delete:entry", (_, id) => {
       const entries = this.storage.get("entries");

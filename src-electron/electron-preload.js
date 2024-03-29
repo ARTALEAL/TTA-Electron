@@ -16,11 +16,14 @@ contextBridge.exposeInMainWorld("myApp", {
   stopTimer: () => {
     ipcRenderer.send("stop:timer");
   },
-  saveEntry: (data) => {
-    ipcRenderer.send("save", data);
+  saveTodo: (data) => {
+    ipcRenderer.send("save:todo", data);
   },
   editDescription: (data) => {
     ipcRenderer.send("edit:description", data);
+  },
+  editTodoDescription: (data) => {
+    ipcRenderer.send("edit:tododescription", data);
   },
   deleteEntry: (id) => {
     ipcRenderer.send("delete:entry", id);

@@ -19,7 +19,7 @@ export default defineComponent({
     window.myApp.getEntries((_, data) => console.log(data.entries));
     window.myApp.getTodos((_, data) => console.log(data.todos));
     window.myApp.getEntries((_, data) => this.taskStore.setTasks(data.entries));
-    window.myApp.getEntries((_, data) => this.todosStore.setTasks(data.todos));
+    window.myApp.getTodos((_, data) => this.todosStore.setTasks(data.todos));
   },
 });
 </script>

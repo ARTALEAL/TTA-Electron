@@ -25,16 +25,29 @@
 
 <script>
 import { defineComponent } from "vue";
+import { date } from "quasar";
+import { useToDoStore } from "../stores/todoStore";
 export default defineComponent({
   name: "NewTodo",
   data() {
     return {
       newActivity: "",
+      todoStore: useToDoStore(),
     };
   },
   methods: {
     handleCreateTodo() {
       console.log("created", this.newActivity);
+      const timeStamp = Date.now();
+      const newTodo = {
+        id: timeStamp,
+        isDone: false,
+        createdAt: date.formatDate(timeStamp, "YYYY-MM-DDTHH:mm:ss"),
+        description: "Нет описания",
+        title: this.newActivity,
+      };
+      window.myApp.saveTodo(newTodo);
+      this.todoStore.setTask(newTodo);
       this.newActivity = "";
     },
   },

@@ -1,6 +1,37 @@
 <template>
   <div class="activity">
-    <h1>Hello</h1>
+    <div class="details">
+      <h5 class="title">{{ title }}</h5>
+      <p class="description" @click="editPopup = true">
+        {{ newDescription ? newDescription : description }}
+      </p>
+      <q-dialog v-model="editPopup" persistent>
+        <q-card style="min-width: 350px">
+          <q-card-section>
+            <div class="text-h6">Введите описание</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <q-input
+              dense
+              v-model="newDescription"
+              autofocus
+              @keyup.enter="handleEditDescription"
+            />
+          </q-card-section>
+
+          <q-card-actions align="right" class="text-primary">
+            <q-btn flat label="Отмена" @click="discardChanges" v-close-popup />
+            <q-btn
+              @click="handleEditDescription"
+              flat
+              label="Сохранить"
+              v-close-popup
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
   </div>
 </template>
 
@@ -29,7 +60,7 @@ export default defineComponent({
           ? this.newDescription
           : this.$props.description,
       };
-      window.myApp.editDescription(newData);
+      window.myApp.editTodoDescription(newData);
       this.editPopup = false;
     },
     discardChanges() {
