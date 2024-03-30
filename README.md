@@ -7,7 +7,7 @@
 
 ### Скачать приложение можно по ссылке
 
-(Скачать приложение)[https://disk.yandex.ru/d/Genz-M-lQYfWAw]
+(Скачать приложение)['https://disk.yandex.ru/d/Genz-M-lQYfWAw']
 
 ### Установка
 
