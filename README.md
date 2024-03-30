@@ -1,21 +1,29 @@
 # Time Tracking App (tta)
 
-A Quasar Project
+## О приложении
 
-## Install the dependencies
+Данное приложение написано в практических целях и было бы классно, если бы оно принесло пользу кому-либо &#128512;
+
+Для разработчиков:
+
+## Склонировать репозиторий
+
+## Установить зависимости
+
 ```bash
 yarn
 # or
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Запуск дев режима
+
 ```bash
-quasar dev
+npm start
 ```
 
+### Сборка проекта
 
-### Build the app for production
 ```bash
-quasar build
+npm run build
 ```
