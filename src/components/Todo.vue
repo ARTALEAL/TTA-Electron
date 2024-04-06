@@ -1,11 +1,11 @@
 <template>
   <div class="activity">
     <div class="details">
-      <h5 :class="isDone ? 'title done' : 'title'">{{ title }}</h5>
-      <p class="description" @click="isDone ? null : (editPopup = true)">
+      <h5 :class="status ? 'title done' : 'title'">{{ title }}</h5>
+      <p class="description" @click="status ? null : (editPopup = true)">
         {{ newDescription ? newDescription : description }}
       </p>
-      <span v-if="isDone" class="done">Готово!</span>
+      <span v-if="status" class="done">Готово!</span>
       <q-dialog v-model="editPopup" persistent>
         <q-card style="min-width: 350px">
           <q-card-section>
